@@ -14,7 +14,13 @@ export async function GET() {
     const quote = await rawQuote.json();
     const wallpaper = await rawWallpapaer.json()
 
-    // const quote = '_quote_';
+    // const quote = {
+    //     "quoteText": "A time splashed with interest, wounded with tragedy, crevassed with joy — that’s the time that seems long in the memory. And this is right when you think about it. Eventlessness has no posts to drape duration on.",
+    //     "quoteAuthor": "John Steinbeck",
+    //     "senderName": "",
+    //     "senderLink": "",
+    //     "quoteLink": "http://forismatic.com/en/38945829c0/"
+    // };
     // const wallpaper = {
     //     "id": "q5s7tZFaj1g",
     //     "slug": "q5s7tZFaj1g",

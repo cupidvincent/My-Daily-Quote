@@ -14,24 +14,6 @@ const getQuoteandImage = async (req, res) => {
 	return fin;
 }
 
-
-export async function getServerSideProps(context) {
-// 	const sample = await getImage();
-// 	console.log({sample})
-//   return { props: { repo:'hi' } };
-	const { req } = context;
-	const serverHost = req.headers.host;
-
-	// Rest of your code...
-	console.log('serverHost',{serverHost});
-	return {
-		props: {
-			// Pass the server host as a prop
-			serverHost,
-		},
-	};
-} 
-
 export default async function Quote(props) {
 	console.log({props})
 	const data =''; //await getData();
