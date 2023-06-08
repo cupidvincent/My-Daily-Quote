@@ -1,0 +1,35 @@
+#QuoteAndWallpaper {
+    position: relative;
+}
+
+#quote_continer {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+
+    #text-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        font-size: 2rem;
+    }
+}
+#wallpaper_continer {
+    margin: auto;
+    width: fit-content;
+    position: relative;
+    .blurCover {
+        background-color: rgba(255, 255, 255, 0.4);
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+
