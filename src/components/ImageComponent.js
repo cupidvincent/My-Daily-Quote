@@ -28,7 +28,8 @@ import QuoteComponent from './QuoteComponent';
                 src={imageUrl}
                 width={imgSize.width}
                 height={imgSize.height}
-                sizes='(max-width: 70px) 70vw'
+                // fill
+                // sizes='(max-width: 70px) 70vw'
                 quality={100}
                 placeholder={'blur'}
                 blurDataURL={imageUrl}

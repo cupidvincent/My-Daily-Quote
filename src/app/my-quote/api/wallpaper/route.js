@@ -2,26 +2,14 @@ import { NextResponse } from 'next/server';
  
 export async function GET() {
 
-    const rawQuote =  await fetch('http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json', {
-        'mode': 'no-cors',
+    const key = process.env.UNSPLASH_KEY;
+
+    const rawWallpapaer = await fetch(`https://api.unsplash.com/photos/random/?orientation=landscape&client_id=${key}`, {
         cache: 'no-store'
     });
-
-    const rawWallpapaer = await fetch('https://api.unsplash.com/photos/random/?orientation=landscape&client_id=RH-ELiY31MyDM3pHdE4l8kDKaD7E-CnUKJgDS4wWjKI', {
-        cache: 'no-store'
-    });
-
-    const quote = await rawQuote.json();
     const wallpaper = await rawWallpapaer.json()
 
-    // const quote = {
-    //     "quoteText": "A time splashed with interest, wounded with tragedy, crevassed with joy — that’s the time that seems long in the memory. And this is right when you think about it. Eventlessness has no posts to drape duration on.",
-    //     "quoteAuthor": "John Steinbeck",
-    //     "senderName": "",
-    //     "senderLink": "",
-    //     "quoteLink": "http://forismatic.com/en/38945829c0/"
-    // };
-    // const wallpaper = {
+    // const wallpaper = env === 'local' ? {
     //     "id": "q5s7tZFaj1g",
     //     "slug": "q5s7tZFaj1g",
     //     "created_at": "2023-05-16T09:53:24Z",
@@ -391,6 +379,6 @@ export async function GET() {
     //     "topics": []
     // };
 
-    return NextResponse.json({ quote,wallpaper });
+    return NextResponse.json({wallpaper });
 }
 
