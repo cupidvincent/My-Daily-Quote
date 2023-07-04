@@ -5,6 +5,7 @@ import ImageComponents from '../../components/ImageComponent'
 import QuoteComponent from '../../components/QuoteComponent';
 import DownloadButton from '../../components/DownloadButton';
 import OperationButton from '../../components/OperationButton';
+import Footer from '../../components/Footer';
 
 export const metadata = {
   title: 'My Quote',
@@ -48,19 +49,22 @@ export default  function Quote({quote, wallpaper}) {
 	}
 	
 	return (
-		<MyQuoteLayout>
-			<div id='QuoteAndWallpaper' className='shadow-xl shadow-gray-600'>
-				<ImageComponents data={{quote: quoteContainer, wallpaper: wallpaperContainer}}/>
-				{/* <canvas id='setCanvas'  width="800" height="500"/> */}
-			</div>
-			<div className={'flex flex-col justify-center px-2'}>
-				<OperationButton label={'New Quote'} action={getNewQuote}/>
-				<OperationButton label={'New Wallpaper'} action={getNewWallpaper}/>
-				<OperationButton label={'Get New'} action={getNewQuoteAndImg}/>
-				<DownloadButton  data={{quote: quoteContainer, wallpaper: wallpaperContainer}} />
+		<>
+			<MyQuoteLayout>
+				<div id='QuoteAndWallpaper' className='shadow-xl shadow-gray-600'>
+					<ImageComponents data={{quote: quoteContainer, wallpaper: wallpaperContainer}}/>
+					{/* <canvas id='setCanvas'  width="800" height="500"/> */}
+				</div>
+				<div className={'flex flex-col justify-center px-2'}>
+					<OperationButton label={'New Quote'} action={getNewQuote}/>
+					<OperationButton label={'New Wallpaper'} action={getNewWallpaper}/>
+					<OperationButton label={'Get New'} action={getNewQuoteAndImg}/>
+					<DownloadButton  data={{quote: quoteContainer, wallpaper: wallpaperContainer}} />
 
-			</div>
-		</MyQuoteLayout>
+				</div>
+			</MyQuoteLayout>
+			<Footer />
+		</>
 	)
 }
 

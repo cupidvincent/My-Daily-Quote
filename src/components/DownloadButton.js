@@ -38,9 +38,49 @@ function DownloadButton({data}) {
 		});
 	};
 
+	const wrapText = (ctx, text, author, x, y, maxWidth, lineHeight) => {
+		// First, start by splitting all of our text into words, but splitting it into an array split by spaces
+		let words = text.split(' ');
+		let line = ''; // This will store the text of the current line
+		let testLine = ''; // This will store the text when we add a word, to test if it's too long
+		let lineArray = []; // This is an array of lines, which the function will return
+
+		// Lets iterate over each word
+		for(var n = 0; n < words.length; n++) {
+			// Create a test line, and measure it..
+			testLine += `${words[n]} `;
+			let metrics = ctx.measureText(testLine);
+			let testWidth = metrics.width;
+			// If the width of this test line is more than the max width
+				if (testWidth > maxWidth && n > 0) {
+					// Then the line is finished, push the current line into "lineArray"
+					lineArray.push([line, x, y]);
+					// Increase the line height, so a new line is started
+					// y += lineHeight;
+					y += lineHeight
+					// Update line and test line to use this word as the first word on the next line
+					line = `${words[n]} `;
+					testLine = `${words[n]} `;
+				}
+				else {
+					// If the test line is still less than the max width, then add the word to the current line
+					line += `${words[n]} `;
+				}
+				// If we never reach the full max width, then there is only one line.. so push it into the lineArray so we return something
+				if(n === words.length - 1) {
+					lineArray.push([line, x, y]);
+				}
+				console.log({y, lineHeight})
+		}
+		// Return the line array
+		lineArray.push([author, x, y+ (lineHeight * 3) ]);
+		console.log({lineArray})
+		return lineArray;
+	}
+
 	const manualImage = () => {
-		// const canvas = document.createElement('canvas');
-		const canvas = document.getElementById("setCanvas");
+		const canvas = document.createElement('canvas');
+		// const canvas = document.getElementById("setCanvas");
 		const context = canvas.getContext('2d');
 	  
 		// Set canvas dimensions
@@ -60,16 +100,38 @@ function DownloadButton({data}) {
 			context.fillRect(0, 0, width, height);
 
 			// Draw the text overlay
-			const text = quote.quoteText;
-			context.font = '20rem Arial';
+			const text = `"${quote.quoteText}"`;
+			const author = `-${quote.quoteAuthor}`;
+
+			context.font = 'bold 20rem Comic Sans MS';
 			context.fillStyle = 'black';
-			context.fillText(text, 20, 200, width);
+			context.textAlign = 'left';
+			context.textBaseline = 'middle';
+
+			const lineHeight = 350; // Line height for each line
+			let wrappedText = wrapText(context, text, author, canvas.width - (canvas.width * .9), canvas.height / 2,  canvas.width * .8, lineHeight);
+			console.log(canvas.width , canvas.width * .9 ,canvas.width - (canvas.width * .9))
+
+			let lineTextCount = lineHeight * (wrappedText.length + 2);
+			let deducted = canvas.height - lineTextCount;
+			let newY = deducted  / 2;
+
+			wrappedText.forEach(function(item, index) {
+				console.log({canvasHeight: canvas.height, lineTextCount, deducted, newY})
+				if(index === wrappedText.length -1 ) {
+					context.font = 'oblique 20rem Comic Sans MS';
+					newY = newY + ( lineHeight * 2)
+				}
+				context.fillText(item[0], item[1], newY); 
+				newY += lineHeight;
+			})
+			// context.fillText(`"${text}" \n -${author}`, canvas.width / 2, canvas.height / 2, canvas.width * .8);
 
 			// Generate download link
-			// const link = document.createElement('a');
+			const link = document.createElement('a');
 
 			link.href = canvas.toDataURL(); // Convert canvas to data URL
-			link.download = 'manualImage.png'; // Set the desired filename for the downloaded image
+			link.download = `${new Date().getTime()}.png`; // Set the desired filename for the downloaded image
 			link.click();
 
 		};

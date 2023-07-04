@@ -9,7 +9,7 @@ export async function GET() {
         'mode': 'no-cors',
         cache: 'no-store'
     });
-    console.log('env-',env)
+    
     const quote = await rawQuote.json();
 
     const rawWallpapaer = await fetch(`https://api.unsplash.com/photos/random/?orientation=landscape&client_id=${key}`, {
